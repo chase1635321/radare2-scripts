@@ -24,6 +24,7 @@ for function in functions:
     r.cmd("db " + function)
 
 refs = r.cmd("axq | grep DATA | awk {'print $1'}").split("\n")
+refs = []
 for ref in refs:
     bp_count += 1
     print("Adding breakpoint " + str(bp_count), end="\r")
