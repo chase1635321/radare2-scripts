@@ -2,7 +2,7 @@
 
 import r2pipe
 import sys
-import Levenshtein as Leven
+#import Levenshtein as Leven
 
 if len(sys.argv) < 2:
     print("Usage: ./leafs <binary>")
