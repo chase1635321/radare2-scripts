@@ -1,5 +1,0 @@
-[34mvoid[0m [31mentry.init0[0m([1;95mvoid[0m)
-[34mvoid[0m [31msym.register_tm_clones[0m([1;95mvoid[0m)
-[34mundefined8[0m [31mmain[0m([1;95mvoid[0m)
-[34mvoid[0m [31msym.deregister_tm_clones[0m([1;95mvoid[0m)
-[34mvoid[0m [31msym.deregister_tm_clones[0m([1;95mvoid[0m)
