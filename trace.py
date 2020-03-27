@@ -3,29 +3,55 @@
 import r2pipe
 from termcolor import colored
 import os
-#import Levenshtein as Leven
-
-# Option to rename functions
-# Can see dissasembly or summary
-# Progress bar at the top
 
 r = r2pipe.open()
 
-r.cmd("ood;aa;aac")
+cache = ""
+try:
+    with open("trace_cache.txt") as f:
+        cache = f.read()
+except:
+    print("No cache found, analyzing now")
+    r.cmd("aaa")
+    functions = r.cmdj("aflj")
+
+    functionData = []
+
+    for a in functions:
+        if a['size'] > 30:
+            print("[+] Added breakpoint at function " + colored(a['name'], "green") + " of size " + str(a['size']))
+
+            r.cmd("db " + hex(a['offset']))
+            r.cmd("s " + hex(a['offset']))
+
+            for line in r.cmd("pdg").split("\n"):
+                if "(" in line and ")" in line and line[0] != " " and not "ram" in line:
+                    functionData.append(hex(a['offset']) + " " + line)
+
+    with open("trace_cache.txt", "w") as f:
+        f.write("\n".join(functionData))
+
+    os.system("cat trace_cache.txt")
+    exit()
+
+
+
+r.cmd("aaa;")
 #r.cmd("Vp")
 i = 0.0
 total = 0.0
 
 functions = r.cmdj("aflj")
 
+functionData = []
+
 for a in functions:
     if a['size'] > 30:
         print("[+] Added breakpoint at function " + colored(a['name'], "green") + " of size " + str(a['size']))
-        #r.cmd("s " + a['name'])
-        #print("b " + hex(a['offset']))
-        r.cmd("db " + hex(a['offset']))
-        #r.cmd("dbc " + hex(a['offset']) + " dc")
 
+        r.cmd("db " + hex(a['offset']))
+
+r.cmd("ood sldkfjsldkfj")
 #r.cmd("dc")
 
 output = "hit"
@@ -45,9 +71,11 @@ while True:
     if last1 == last3 and last2 == last4 and last1 != last2:
         break
 
-    for line in r.cmd("pd 1").split("\n"):
-        if "(" in line and ")" in line and ";" in line:
-            line = " ".join(line.split(" ")[2:])
+    found = False
+    for line in r.cmd("pdg").split("\n"):
+        if "(" in line and ")" in line and line[0] != " " and not "ram" in line:
+            found = True
+            #line = " ".join(line.split(" ")[2:])
             print(line)
             log += line + "\n"
     r.cmd("dc")
@@ -57,9 +85,13 @@ with open("log.txt", "w") as f:
 
 print("_"*80)
 print("")
+#print(functionData)
 
 os.system("cat log.txt")
+
+# sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g"
 
 #for i in range(0, 30):
 #    output = r.cmd("dc")
 #    print("Output: " + output)
+

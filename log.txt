@@ -1,7 +1,5 @@
-[31mentry0[0m (int64_t arg3);
-[31mentry.init0[0m ();
-int [31mmain[0m (int argc, char **argv, char **envp);
-[31mfcn.55e68072b380[0m (int64_t arg1);
-[31mfcn.55e680731470[0m ();
-[31mentry.fini0[0m ();
-[31mfcn.55e6807211f0[0m ();
+[34mvoid[0m [31mentry.init0[0m([1;95mvoid[0m)
+[34mvoid[0m [31msym.register_tm_clones[0m([1;95mvoid[0m)
+[34mundefined8[0m [31mmain[0m([1;95mvoid[0m)
+[34mvoid[0m [31msym.deregister_tm_clones[0m([1;95mvoid[0m)
+[34mvoid[0m [31msym.deregister_tm_clones[0m([1;95mvoid[0m)

@@ -1,0 +1,2 @@
+clear
+r2 -i trace.py hashmenot
