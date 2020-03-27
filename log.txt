@@ -8,5 +8,4 @@
 [34mvoid[0m [31msym.hash[0m([34muint32_t[0m [0marg1[0m, [34mchar[0m *[0marg2[0m)
 [34mvoid[0m [31msym.hash[0m([34muint32_t[0m [0marg1[0m, [34mchar[0m *[0marg2[0m)
 [34mvoid[0m [31msym.hash[0m([34muint32_t[0m [0marg1[0m, [34mchar[0m *[0marg2[0m)
-[34mvoid[0m [31msym.hash[0m([34muint32_t[0m [0marg1[0m, [34mchar[0m *[0marg2[0m)
 [34mvoid[0m [31msym.deregister_tm_clones[0m([1

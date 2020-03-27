@@ -1,7 +1,0 @@
-0x4007e0,undefined8 placeholder_0, undefined8 placeholder_1, undefined8 rtld_fini
-0x400810,void
-0x400850,void
-0x4008b0,void
-0x400a70,uint32_t arg1, char *arg2
-0x400bf0,int64_t arg1, int64_t arg2, int64_t arg3
-0x4008d6,void

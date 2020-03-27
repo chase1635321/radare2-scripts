@@ -6,7 +6,7 @@ import os
 
 r = r2pipe.open()
 
-os.system("rm trace_cache.txt")
+#os.system("rm trace_cache.txt")
 
 cache = ""
 try:
@@ -47,14 +47,14 @@ except:
         r.cmd("s " + addr)
         other = line.split(",")[1:]
         for arg in other:
-            temp = r.cmd("afvd " + arg.split(" ")[-1])
+            temp = r.cmd("afvd " + arg.split(" ")[-1].replace("*", ""))
             if len(temp) > 1:
                 commands += ";" + temp.strip()
         if commands == "":
             commands = "\n"
 
         argCommands.append(commands)
-    print(str(argCommands))
+    #print(str(argCommands))
     
     finalCache = []
     for i in range(0, len(functionData)):
@@ -64,12 +64,14 @@ except:
         f.write("\n".join(finalCache))
 
     os.system("cat trace_cache.txt")
+    os.system("rm temp.txt; rm temp2.txt")
     print(colored("\nCache generated, run script again to trace program execution", "green"))
     exit()
 
 names = []
 breakpoints = []
 cache = []
+argCommands = {}
 
 with open("trace_cache.txt", "r") as f:
     cache = f.read().split("\n")
@@ -80,6 +82,10 @@ for line in cache:
     print("[+] Added breakpoint at function " + n)
     breakpoints.append(b)
     names.append(n)
+    if not "void" in str(line.split(";")[2:]):
+        argCommands[b] = line.split(";")[2:]
+    else:
+        argCommands[b] = []
 
     r.cmd("db " + b)
 
@@ -99,6 +105,8 @@ last4 = "d"
 
 hits = []
 
+print(str(argCommands))
+
 log = ""
 while True:
     last4 = last3
@@ -109,6 +117,11 @@ while True:
     if last1 == last3 and last2 == last4 and last1 != last2:
         break
 
+    try:
+        for c in argCommands[int(r.cmd("dr rip").strip(), 16)]:
+            print(c)
+    except:
+        pass
     hits.append(r.cmd("dr rip").strip())
     r.cmd("dc")
 
