@@ -26,7 +26,7 @@ except:
 
             for line in r.cmd("pdg").split("\n"):
                 if "(" in line and ")" in line and line[0] != " " and not "ram" in line:
-                    functionData.append(hex(a['offset']) + " " + line)
+                    functionData.append(hex(a['offset']) + ";" + line)
 
     with open("trace_cache.txt", "w") as f:
         f.write("\n".join(functionData))
@@ -43,15 +43,20 @@ with open("trace_cache.txt", "r") as f:
     cache = f.read().split("\n")
 
 for line in cache:
-    b = line.split(" ")[0]
-    n = " ".join(line.split(" ")[1:])
+    b = line.split(";")[0]
+    n = line.split(";")[1]
     print("[+] Added breakpoint at function " + n)
     breakpoints.append(b)
     names.append(n)
 
     r.cmd("db " + b)
 
+baddr1 = int(r.cmd("e~baddr").split(" ")[2], 16)
 r.cmd("ood sldkfjsldkfj")
+baddr2 = int(r.cmd("e~baddr").split(" ")[2], 16)
+
+print(colored("Static base address: " + hex(baddr1), "yellow"))
+print(colored("Process base address: " + hex(baddr2), "yellow"))
 
 output = "hit"
 
@@ -78,8 +83,8 @@ while True:
 print(hits)
 for hit in hits:
     for line in cache:
-        if int(line.split(" ")[0].strip(), 16) == int(hit.strip(), 16):
-            log += " ".join(line.split(" ")[1:]) + "\n"
+        if int(line.split(";")[0].strip(), 16) == int(hit.strip(), 16):
+            log += line.split(";")[1] + "\n"
 
 with open("log.txt", "w") as f:
     f.write(log)
