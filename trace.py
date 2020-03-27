@@ -69,7 +69,7 @@ except:
     with open("trace_cache.txt", "w") as f:
         f.write("\n".join(finalCache))
 
-    os.system("cat trace_cache.txt")
+    #os.system("cat trace_cache.txt")
     os.system("rm temp.txt; rm temp2.txt")
     print(colored("\nCache generated, run script again to trace program execution", "green"))
     exit()
@@ -82,6 +82,14 @@ argCommands = {}
 with open("trace_cache.txt", "r") as f:
     cache = f.read().split("\n")
 
+
+baddrDiff = 0
+baddr1 = int(r.cmd("e~baddr").split(" ")[2], 16)
+r.cmd("ood sldkfjsldkfj")
+baddr2 = int(r.cmd("e~baddr").split(" ")[2], 16)
+
+baddrDiff = baddr2-baddr1
+
 for line in cache:
     b = line.split(";")[0]
     n = line.split(";")[1]
@@ -93,11 +101,9 @@ for line in cache:
     else:
         argCommands[int(b, 16)] = []
 
-    r.cmd("db " + b)
+    r.cmd("db " + hex(int(b, 16) + baddrDiff))
 
-baddr1 = int(r.cmd("e~baddr").split(" ")[2], 16)
-r.cmd("ood sldkfjsldkfj")
-baddr2 = int(r.cmd("e~baddr").split(" ")[2], 16)
+# Code was here
 
 print(colored("Static base address: " + hex(baddr1), "yellow"))
 print(colored("Process base address: " + hex(baddr2), "yellow"))
@@ -136,7 +142,7 @@ while True:
 print(hits)
 for hit in hits:
     for line in cache:
-        if int(line.split(";")[0].strip(), 16) == int(hit.strip(), 16):
+        if int(line.split(";")[0].strip(), 16) == int(hit.strip(), 16)-baddrDiff:
             temp = ";".join(line.split(";")[1:]) + "\n"
             log += temp
 
