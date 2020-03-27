@@ -63,7 +63,8 @@ except:
     
     finalCache = []
     for i in range(0, len(functionData)):
-        finalCache.append(functionData[i] + argCommands[i].strip())
+        #finalCache.append(functionData[i] + argCommands[i].strip()) 
+        finalCache.append(functionData[i]) # Could append the commands to run here
 
     with open("trace_cache.txt", "w") as f:
         f.write("\n".join(finalCache))
@@ -126,7 +127,6 @@ while True:
         #print(str(int(r.cmd("dr rip").strip(), 16)))
         for c in argCommands[int(r.cmd("dr rip").strip(), 16)]:
             print(c)
-            #print(r.cmd(c))
     except:
         pass
 
@@ -137,7 +137,8 @@ print(hits)
 for hit in hits:
     for line in cache:
         if int(line.split(";")[0].strip(), 16) == int(hit.strip(), 16):
-            log += line.split(";")[1] + "\n"
+            temp = ";".join(line.split(";")[1:]) + "\n"
+            log += temp
 
 with open("log.txt", "w") as f:
     f.write(log)

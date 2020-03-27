@@ -2,6 +2,6 @@
 0x400810;[34mvoid[0m [31msym.deregister_tm_clones[0m([1;95mvoid[0m)
 0x400850;[34mvoid[0m [31msym.register_tm_clones[0m([1;95mvoid[0m)
 0x4008b0;[34mvoid[0m [31mentry.init0[0m([1;95mvoid[0m)
-0x400a70;[34mvoid[0m [31msym.hash[0m([34muint32_t[0m [0marg1[0m, [34mchar[0m *[0marg2[0m);pf r (rdi);ps 1 @ (rsi)
-0x400bf0;[34mvoid[0m [31msym.__libc_csu_init[0m([34mint64_t[0m [0marg1[0m, [34mint64_t[0m [0marg2[0m, [34mint64_t[0m [0marg3[0m);pf r (rdi);pf r (rsi);pf r (rdx)
+0x400a70;[34mvoid[0m [31msym.hash[0m([34muint32_t[0m [0marg1[0m, [34mchar[0m *[0marg2[0m)
+0x400bf0;[34mvoid[0m [31msym.__libc_csu_init[0m([34mint64_t[0m [0marg1[0m, [34mint64_t[0m [0marg2[0m, [34mint64_t[0m [0marg3[0m)
 0x4008d6;[34mundefined8[0m [31mmain[0m([1;95mvoid[0m)
