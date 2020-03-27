@@ -46,10 +46,15 @@ except:
         addr = line.split(",")[0]
         r.cmd("s " + addr)
         other = line.split(",")[1:]
+        argCounter = 1
         for arg in other:
             temp = r.cmd("afvd " + arg.split(" ")[-1].replace("*", ""))
+            if "char" in arg and "*" in arg:
+                print("FOUND CHAR POINTER, arg number " + str(argCounter))
+                temp = "ps 1 @ " + temp.split(" ")[-1]
             if len(temp) > 1:
                 commands += ";" + temp.strip()
+            argCounter += 1
         if commands == "":
             commands = "\n"
 
@@ -83,9 +88,9 @@ for line in cache:
     breakpoints.append(b)
     names.append(n)
     if not "void" in str(line.split(";")[2:]):
-        argCommands[b] = line.split(";")[2:]
+        argCommands[int(b, 16)] = line.split(";")[2:]
     else:
-        argCommands[b] = []
+        argCommands[int(b, 16)] = []
 
     r.cmd("db " + b)
 
@@ -118,10 +123,13 @@ while True:
         break
 
     try:
+        #print(str(int(r.cmd("dr rip").strip(), 16)))
         for c in argCommands[int(r.cmd("dr rip").strip(), 16)]:
             print(c)
+            #print(r.cmd(c))
     except:
         pass
+
     hits.append(r.cmd("dr rip").strip())
     r.cmd("dc")
 
